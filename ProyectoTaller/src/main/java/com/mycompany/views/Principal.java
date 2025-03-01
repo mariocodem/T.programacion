@@ -26,7 +26,7 @@ public class Principal extends javax.swing.JPanel {
 
     // Método para obtener el texto del JTextField
    public  String getRuta(){
-       rutaArchivo = ruta.getText();
+       rutaArchivo = ruta.getText();// the most important method is this because here we capture the route
     return rutaArchivo;
 }
 

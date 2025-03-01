@@ -41,12 +41,14 @@ public class Registro extends javax.swing.JPanel {
     btnGuardar.putClientProperty( "JButton.buttonType", "roundRect" );
     
     }
+    
+    //This method allows us to open the file and perform the records in the file
 private void registrarUsuario(JTextField nombre, JTextField ID, JPasswordField pass, String url) {
     String n = nombre.getText().trim();
-    String Id = ID.getText().trim();
+    String Id = ID.getText().trim();//cleans spaces
     String pasw = new String(pass.getPassword()).trim(); // Obtener contraseña de manera segura
 
-    if (n.isEmpty() || pasw.isEmpty() || Id.isEmpty()) {
+    if (n.isEmpty() || pasw.isEmpty() || Id.isEmpty()) {//check if the fields are empty, not to be continued execution 
         JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
         return;
     }
@@ -64,12 +66,12 @@ private void registrarUsuario(JTextField nombre, JTextField ID, JPasswordField p
     }
 
     // Formatear los datos con tamaño fijo
-    String usuario = String.format("%-15s", n);
+    String usuario = String.format("%-15s", n);//here we give you the format to save the log  
     String clave = String.format("%-15s", pasw);
     String nuevoRegistro = String.format("%03d%s%s\n", id, usuario, clave); // ID fijo de 3 caracteres
 
     int tamRegistro = 34; // Tamaño fijo del registro
-    long pos = (id - 1) * tamRegistro; // Posición exacta donde escribir el registro
+    long pos = (id - 1) * tamRegistro; // here we calculate the exact position of where to register the new user
 
     try (RandomAccessFile raf = new RandomAccessFile(url, "rw")) {
         if (pos < raf.length()) { // Verificar si el registro ya existe
@@ -84,12 +86,12 @@ private void registrarUsuario(JTextField nombre, JTextField ID, JPasswordField p
             }
         }
 
-        raf.seek(pos); // Ir a la posición exacta
-        raf.writeBytes(nuevoRegistro); // Escribir el nuevo usuario en su posición fija
+        raf.seek(pos); //here we are located in the line where we will save the new record
+        raf.writeBytes(nuevoRegistro); // here Type the new user in its fixed position
 
         JOptionPane.showMessageDialog(this, "Usuario registrado con éxito.");
 
-        // Limpiar campos después de registrar
+        // clears the fields after registrationr
         ID.setText("");
         nombre.setText("");
         pass.setText("");

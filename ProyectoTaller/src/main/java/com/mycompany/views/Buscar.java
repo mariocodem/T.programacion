@@ -93,15 +93,15 @@ public class Buscar extends javax.swing.JPanel {
         } else {
             System.out.println("Coincidencia encontrada: " + linea);
             JLabel lbUsuario = new JLabel(linea);
-            PanelUsuarios.add(lbUsuario);
+            PanelUsuarios.add(lbUsuario);//if it is found displayed in the panel on a Jlabel
         }
 
-        raf.close(); // Cerrar archivo
+        raf.close(); //close the file 
     } catch (IOException e) {
         System.out.println("Error I/O: " + e.getMessage());
     }
 
-    PanelUsuarios.revalidate(); // Refrescar la interfaz
+    PanelUsuarios.revalidate(); // Refresh the interface
     PanelUsuarios.repaint();
 }
 

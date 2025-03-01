@@ -86,11 +86,13 @@ private void Buscar(String archivo, int id) {
 
     private void Editar(String ruta, int id) {
         try {
+            
+            //here we will edit the records we want through id
+
             RandomAccessFile raf = new RandomAccessFile(ruta, "rw"); // Modo lectura/escritura
 
             int tamRegistro = 34; // Tamaño fijo del registro
-            long pos = (id - 1) * tamRegistro; // Posición exacta del registro en el archivo
-
+            long pos = (id - 1) * tamRegistro; // here we calculate the exact position of where to user locate
             if (pos >= raf.length()) { // Verificar si el ID existe en el archivo
                 JOptionPane.showMessageDialog(null, "ID no encontrado.", "Error", JOptionPane.ERROR_MESSAGE);
                 raf.close();
@@ -114,7 +116,7 @@ private void Buscar(String archivo, int id) {
                 return;
             }
 
-            // Obtener los nuevos datos desde el JTextArea
+            // Get the new data from JTextArea
             String texto = TextArea.getText().trim();
             String[] partesArea = texto.split(":");
 
@@ -124,13 +126,13 @@ private void Buscar(String archivo, int id) {
                 return;
             }
 
-            // Formatear los datos con tamaño fijo
-            String nuevoUsuario = String.format("%-15s", partesArea[0]); // Usuario de 15 caracteres
-            String nuevaClave = String.format("%-15s", partesArea[1]);   // Clave de 15 caracteres
+            // here gives you the way for you want to save in the file 
+            String nuevoUsuario = String.format("%-15s", partesArea[0]); // User of 15 characters
+            String nuevaClave = String.format("%-15s", partesArea[1]);   // password of 15 characters
             String nuevaLinea = String.format("%03d%s%s\n", id, nuevoUsuario, nuevaClave);
 
             raf.seek(pos); // Volver a la posición exacta
-            raf.writeBytes(nuevaLinea); // Escribir el nuevo registro
+            raf.writeBytes(nuevaLinea); // write the new record.
 
             JOptionPane.showMessageDialog(null, "Usuario actualizado con éxito.");
 

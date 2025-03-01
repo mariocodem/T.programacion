@@ -29,16 +29,16 @@ public class Eliminar extends javax.swing.JPanel {
     private void Eliminar(String ruta, int id) {
     File archivoOriginal = new File(ruta);
     File archivoTemporal = new File("temp.txt");
-
+//here we create a temporary file where all data except the data to be deleted is stored
     try {
         RandomAccessFile raf = new RandomAccessFile(archivoOriginal, "r");
-        RandomAccessFile tempRaf = new RandomAccessFile(archivoTemporal, "rw");
+        RandomAccessFile tempRaf = new RandomAccessFile(archivoTemporal, "rw");//this is the temporaly file
 
         int tamRegistro = 34; // Tamaño fijo del registro
-        long pos = (id - 1) * tamRegistro; // Posición exacta del registro en el archivo
+        long pos = (id - 1) * tamRegistro; // here we calculate the exact position of where to locate to user
         boolean encontrado = false;
 
-        if (pos < raf.length()) { // Verificar si el ID existe en el archivo
+        if (pos < raf.length()) { // Check if the ID exists in the file
             raf.seek(pos); // Ir a la posición exacta
 
             byte[] buffer = new byte[tamRegistro]; 
@@ -62,7 +62,7 @@ public class Eliminar extends javax.swing.JPanel {
         // Copiar el resto del archivo original al temporal
         raf.seek(0);
         for (long i = 0; i < raf.length(); i += tamRegistro) {
-            if (i == pos && encontrado) { // Saltar el registro eliminado
+            if (i == pos && encontrado) { // Skip the deleted log
                 raf.seek(i + tamRegistro);
                 continue;
             }
@@ -76,7 +76,7 @@ public class Eliminar extends javax.swing.JPanel {
         tempRaf.close();
 
         if (encontrado) {
-            // Reemplazar archivo original con el nuevo sin el usuario eliminado
+            //  Replace original file with new one without user removed
             archivoOriginal.delete();
             archivoTemporal.renameTo(archivoOriginal);
         } else {
